@@ -16,6 +16,7 @@ void usart_init(uint8_t ubrr) {
 	UCSR0B = (1<<RXEN0)|(1<<TXEN0);
 	/* Set frame format: 8data, 1stop bit */
 	UCSR0C = (1<<URSEL0)|(3<<UCSZ00);
+	fdevopen(usart_transmit, usart_receive);
 }
 
 void usart_transmit(unsigned char data) {
@@ -42,6 +43,3 @@ void usart_flush(void) {
 	}
 }
 
-void uart_printf(void) {
-	fdevopen(usart_transmit, usart_receive);
-}

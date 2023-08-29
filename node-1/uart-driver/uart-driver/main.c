@@ -17,10 +17,10 @@ int main(void)
     {
 		//unsigned char test_char = usart_receive();
 		//usart_transmit(test_char);
-		_delay_ms(sleep_time);
+		_delay_ms(sleep_time*3);
 		
-		uart_printf("hello world");
-
+		printf("hello world\n, number: %d", 10);
+	
     }
 	return 0;
 }
