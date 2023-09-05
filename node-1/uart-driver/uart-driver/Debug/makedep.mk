@@ -4,5 +4,9 @@
 
 main.c
 
+sram_test.c
+
 uart_driver.c
+
+xmem.c
 
