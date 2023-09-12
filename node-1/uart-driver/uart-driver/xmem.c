@@ -4,16 +4,21 @@
 void xmem_init(void) {
 	MCUCR |= (1 << SRE); //enable XMEM
 	SFIOR |= (1 << XMM2); //bit masking
-	printf("init.....   ");
-	
-	
-	
+	printf("-XMEM init-\n");	
 }
 
 void xmem_write() {
-	volatile uint8_t *SRAM = (uint8_t *)0x1808;
+	volatile uint8_t *SRAM = (uint16_t*)0x1800;
 
 	*SRAM = 0b11111100;
+	*SRAM = 0b11111100;
+	*SRAM = 0b11111100;
+	*SRAM = 0b11111100;
+	*SRAM = 0b11111100;
+	*SRAM = 0b11111100;
+	*SRAM = 0b11111100;
+	*SRAM = 0b11111100;
+	*SRAM = 0b11111100;
 	
-	
+
 }

@@ -9,6 +9,7 @@
 #include <util/delay.h>
 #include "xmem.h"
 #include <avr/io.h>
+#include "adc.h"
 
 
 
@@ -20,24 +21,27 @@ int main(void)
 	
 
 	xmem_init();
-
-	//DDRA = 0;
-
-	SRAM_test();
+	pwm_init();
+	//SRAM_test();
 	
+
+
+
     while (1) 
     {
 		//unsigned char test_char = usart_receive();
 		//usart_transmit(test_char);
-		_delay_ms(sleep_time*2);
-		//xmem_write();
+		_delay_ms(sleep_time*0);
 		
-		//tes
-		
+		//test av chipselect på ADC. Setter PD5 høy, sender dette inn på 
+		volatile uint8_t *SRAM = (uint8_t*)0x1401;
+			
+		*SRAM = 1;
+		printf("ADC value: %d\n\r", *SRAM);
 		
 
 		//PORTA ^= 1;
-		//printf("hello world\n, number: %d", 10);
+		
     }
 	return 0;
 }

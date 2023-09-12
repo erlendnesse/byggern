@@ -19,6 +19,9 @@ void usart_init(uint8_t ubrr) {
 	fdevopen(usart_transmit, usart_receive);
 }
 
+
+
+
 void usart_transmit(unsigned char data) {
 	/* Wait for empty transmit buffer */
 	while ( !( UCSR0A & (1<<UDRE0)) ) {	
