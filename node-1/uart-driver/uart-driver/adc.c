@@ -12,7 +12,8 @@
 	//TCCR3A |= (1 << WGM31);
 	//TCCR3A |= (1 << WGM30);
 
-void pwm_init() {
+void adc_init() {
+	//All code in function inits pwm
 	OCR3A = 0x02;
 	DDRD |= (1 << PD4);
 	//TCCR0 = (1<<WGM00) | (1<<WGM01) | (1<<COM01) | (1<<CS00);
@@ -22,18 +23,29 @@ void pwm_init() {
 	printf("-PWM init-\n");
 }
 
-int adc_write_x() {
-	volatile uint8_t *SRAM = (uint8_t*)0x1400;
+uint8_t adc_read(uint8_t channel) {
+	volatile uint8_t *ADC = (uint8_t*)0x1401;
+	*ADC = 1;
 	
-	*SRAM = 0;
+	int ch0 = *ADC;
+	int ch1 = *ADC;
+	int ch2 = *ADC;
+	int ch3 = *ADC;
 	
-	return *SRAM;
+	switch(channel) {
+		case 0:
+			return ch0;
+		case 1:
+			return ch1;
+		case 2:
+			return ch2;
+		case 3:
+			return ch3;
+		default:
+			printf("Channel not found, arg given: %d", channel);
+			break;
+
+	}
 }
-int adc_write_y() {
-	volatile uint8_t *SRAM = (uint8_t*)0x1401;
-	
-	*SRAM = 1;
-	
-	return *SRAM;
-}
+
 

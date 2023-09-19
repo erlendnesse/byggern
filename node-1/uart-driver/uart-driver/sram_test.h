@@ -11,6 +11,6 @@
 
 
 
-void SRAM_test(void);
+int SRAM_test(void);
 
 #endif /* SRAM_TEST_H_ */

@@ -4,9 +4,11 @@
 
 adc.c
 
-joystick_slider.c
+joystick.c
 
 main.c
+
+oled.c
 
 sram_test.c
 

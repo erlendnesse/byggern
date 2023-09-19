@@ -8,7 +8,7 @@
 
 #include <stdlib.h>
 #include <stdint.h>
-void SRAM_test(void)
+int SRAM_test(void)
 {
 	volatile char *ext_ram = (char *) 0x1800; // Start address for the SRAM
 	uint16_t ext_ram_size = 0x800;
@@ -40,5 +40,9 @@ void SRAM_test(void)
 			retrieval_errors++;
 		}
 	}
+	if (retrieval_errors || write_errors) {
+		return 1;
+	}
 	printf("SRAM test completed with \r\n%4d errors in write phase and \r\n%4d errors in retrieval phase\r\n\r\n", write_errors, retrieval_errors);
+	return 0;
 }

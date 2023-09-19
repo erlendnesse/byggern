@@ -142,13 +142,19 @@
     <Compile Include="adc.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="joystick_slider.c">
+    <Compile Include="joystick.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="joystick_slider.h">
+    <Compile Include="joystick.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="oled.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="oled.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="sram_test.c">
