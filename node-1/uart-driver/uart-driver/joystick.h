@@ -24,11 +24,7 @@ typedef enum{
 
 dir_t dir();
 
-
-
-
-void pos_calibrate();
-
+void joystick_init();
 struct pos pos_read(void);
 
 

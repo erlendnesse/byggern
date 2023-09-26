@@ -7,19 +7,9 @@
 
 
 #include "oled.h"
+#include "fonts.h"
 
-void write_command(uint8_t command) {
-	volatile uint8_t* address = (uint8_t*)0x1000;
-	*address = command;
-}
-
-void write_data(uint8_t data) {
-	volatile uint8_t* address = (uint8_t*)0x1200;
-	*address = data;
-}
-
-void oled_init()
-{
+void oled_init() {
 	write_command(0xae); // display off
 	write_command(0xa1); //segment remap
 	write_command(0xda); //common pads hardware: alternative
@@ -42,4 +32,113 @@ void oled_init()
 	write_command(0xa4); //out follows RAM content
 	write_command(0xa6); //set normal display
 	write_command(0xaf); // display on
+	oled_reset();
 }
+
+void oled_reset() {
+	for (int line = 0xb0; line < 0xb8; line++)
+	{
+		oled_goto_page(line);
+		oled_goto_column(0);
+
+		for (int i = 0; i < 128; i++)
+		{
+			write_data(0x00);
+		}
+
+	}
+}
+
+void oled_clear_page(int page) {
+	oled_goto_page(page);
+	for (int i = 0; i < 128; i++)
+	{
+		write_data(0x00);
+	}
+}
+
+void oled_goto_column(int column) {
+	if (0 <= column && column <= 127) {
+		write_command(0x00 + (column&0x0F));
+		write_command(0x10 + ((column&0xF0) >> 4));
+	}
+	
+	 // Alternativ funksjon
+	 //write_command(0x00 + (column % 16)); // Lower nibble
+	 //write_command(0x10 + (column / 16)); // Higher nibble
+}
+
+void oled_goto_page(int page) {
+	if (0 <= page && page <= 7) {
+		write_command(0xB0 + page);
+	}
+}
+
+void oled_set_position(int page, int column) {
+	oled_goto_page(page);
+	oled_goto_column(column);
+}
+
+void write_command(uint8_t command) {
+	volatile uint8_t* address = (uint8_t*)0x1000;
+	*address = command;
+}
+
+void write_data(uint8_t data) {
+	volatile uint8_t* address = (uint8_t*)0x1200;
+	*address = data;
+}
+
+
+//oled_split_string() {
+//
+//}
+
+
+
+// Tar inn en oppdelt streng vha. oled_split_string og skriver til skjerm
+//void oled_print_char(char c) {
+	//
+	//
+	//int A = 34; // Fordi A-bytene er på plass 33 i font8-arrayet
+	//for (int i = 0; i < 8; i++)
+	//{ // Fordi font8 består av 8 byte per bokstav
+		//int byte = pgm_read_byte(&font8[A][i]); // Henter data fra PROGMEM
+		//write_data(byte);
+	//}
+//}
+
+void oled_print_char(char c) {
+	if (' ' <= c && c <= '~') {
+		for (int i = 0; i < 8; i++) {
+			uint8_t character = pgm_read_byte(&(font8[c - 32][i]));
+			write_data(character);
+		}
+	}
+}
+
+void oled_print_string(const char* string) {
+	int i = 0;
+	while (string[i] != '\0') {
+		oled_print_char(string[i]);
+		++i;
+	}
+}
+
+void oled_set_home() {
+	oled_set_position(1,1);
+	oled_print_string("MAIN MENU");
+	
+}
+
+//void write_command(uint8_t command) {
+	//volatile char *address = (char*)0x1000;
+	//address[0] = command;
+//}
+//
+//void write_data(uint8_t data) {
+	//volatile char *address = (char*)0x1200;
+	//address[0] = data;
+//}
+
+

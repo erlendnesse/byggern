@@ -7,12 +7,11 @@
 
 #include "joystick.h"
 #include "adc.h"
+#include <avr/io.h>
 
-
-void pos_calibrate(void) {
-
+void joystick_init(){
+	PORTD |= (1 << PD5); //setup pullup for PD5 which is button input from Joystick
 }
-
 
 struct pos pos_read(void) {
 	int g_f = 200/190; // gain factor to scale interval correctly
