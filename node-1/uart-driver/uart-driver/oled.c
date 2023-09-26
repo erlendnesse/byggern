@@ -8,6 +8,7 @@
 
 #include "oled.h"
 #include "fonts.h"
+#include "menu.h"
 
 
 void oled_init() {
@@ -90,7 +91,8 @@ void write_data(uint8_t data) {
 	*address = data;
 }
 
-void oled_print_char(char c) {
+// Character printing (Large, Normal, Small)
+void oled_print_char_large(char c) {
 	if (' ' <= c && c <= '~') {
 		for (int i = 0; i < 8; i++) {
 			uint8_t character = pgm_read_byte(&(font8[c - 32][i]));
@@ -99,18 +101,80 @@ void oled_print_char(char c) {
 	}
 }
 
-void oled_print_string(const char* string) {
+void oled_print_char_normal(char c) {
+	if (' ' <= c && c <= '~') {
+		for (int i = 0; i < 5; i++) {
+			uint8_t character = pgm_read_byte(&(font5[c - 32][i]));
+			write_data(character);
+		}
+	}
+}
+
+void oled_print_char_small(char c) {
+	if (' ' <= c && c <= '~') {
+		for (int i = 0; i < 4; i++) {
+			uint8_t character = pgm_read_byte(&(font4[c - 32][i]));
+			write_data(character);
+		}
+	}
+}
+
+// String printing (Large, Normal, Small)
+void oled_print_string_large(const char* string) {
 	int i = 0;
 	while (string[i] != '\0') {
-		oled_print_char(string[i]);
+		oled_print_char_large(string[i]);
+		++i;
+	}
+}
+
+void oled_print_string_normal(const char* string) {
+	int i = 0;
+	while (string[i] != '\0') {
+		oled_print_char_normal(string[i]);
+		++i;
+	}
+}
+
+void oled_print_string_small(const char* string) {
+	int i = 0;
+	while (string[i] != '\0') {
+		oled_print_char_small(string[i]);
 		++i;
 	}
 }
 
 void oled_set_home() {
+	struct menu_items menu = {
+		.menu_index1 = " Play",
+		.menu_index2 = " Tutorial",
+		.menu_index3 = " Practice",
+		.menu_index4 = " Select team",
+		.menu_index5 = " Highscores",
+		.menu_index6 = " Settings"
+	};
+	
 	oled_set_position(0,1);
-	oled_print_string("---MAIN MENU---");
+	oled_print_string_large("---MAIN MENU---");
+	
+	oled_set_position(1,1);
+	oled_print_string_normal(menu.menu_index1);
+	
+	oled_set_position(2,1);
+	oled_print_string_normal(menu.menu_index2);
+	
+	oled_set_position(3,1);
+	oled_print_string_normal(menu.menu_index3);
+	
+	oled_set_position(4,1);
+	oled_print_string_normal(menu.menu_index4);
+	
+	oled_set_position(5,1);
+	oled_print_string_normal(menu.menu_index5);
+	
+	oled_set_position(6,1);
+	oled_print_string_normal(menu.menu_index6);
 	
 	oled_set_position(7,1);
-	oled_print_string("<< RETURN");
+	oled_print_string_large("<< Return");
 }

@@ -10,14 +10,15 @@
 #ifndef MENU_H_
 #define MENU_H_
 
-//struct menu_items {
-	//char *menu_item_1 = "Play";
-	//char *menu_item_2 = "Tutorial";
-	//char *menu_item_3 = "Practice";
-	//char *menu_item_4 = "Select country";
-	//char *menu_item_5 = "Leaderboard";
-	//char *menu_item_6 = "Settings";
-//};
+struct menu_items {
+	char* menu_index1;
+	char* menu_index2;
+	char* menu_index3;
+	char* menu_index4;
+	char* menu_index5;
+	char* menu_index6;
+};
+
 	
 void set_menu();
 void game_fsm();

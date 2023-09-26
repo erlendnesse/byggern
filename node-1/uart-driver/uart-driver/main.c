@@ -37,7 +37,7 @@ int main(void)
     while (1) {
 		printf("Direction : %d\r\n", dir());
 		//_delay_ms(sleep_time);
-		//oled_set_home();
+		oled_set_home();
 	}
 
 	return 0;
