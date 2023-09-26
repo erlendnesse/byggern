@@ -38,6 +38,9 @@ int main(void)
 		printf("Direction : %d\r\n", dir());
 		//_delay_ms(sleep_time);
 		oled_set_home();
+		
+		
+
 	}
 
 	return 0;
