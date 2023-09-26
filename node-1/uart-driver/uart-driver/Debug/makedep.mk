@@ -4,6 +4,8 @@
 
 adc.c
 
+menu.c
+
 joystick.c
 
 main.c

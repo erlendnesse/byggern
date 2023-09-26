@@ -49,22 +49,22 @@ dir_t dir() {
 	struct pos position = pos_read();
 	int x_input = position.x_pos;
 	int y_input = position.y_pos;
-	if (x_input < -10) {
+	if (x_input < -40) {
 		return LEFT;
 	} 
-	else if (x_input > 10) {
+	else if (x_input > 40) {
 		return RIGHT;
 	}
-	if (y_input < -20) {
+	if (y_input < -40) {
 		return DOWN;
 	}
-	else if (y_input > 10) {
+	else if (y_input > 40) {
 		return UP;
 	}
-	else if ((y_input > -10)&&(y_input <10)) {
+	else if ((y_input > -40)&&(y_input <40)) {
 		return NEUTRAL;
 	}
-	else if ((x_input > -10)&&(x_input <10)) {
+	else if ((x_input > -40)&&(x_input <40)) {
 		return NEUTRAL;
 	}
 	return NEUTRAL;

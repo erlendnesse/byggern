@@ -9,6 +9,7 @@
 #include "oled.h"
 #include "fonts.h"
 
+
 void oled_init() {
 	write_command(0xae); // display off
 	write_command(0xa1); //segment remap
@@ -36,7 +37,7 @@ void oled_init() {
 }
 
 void oled_reset() {
-	for (int line = 0xb0; line < 0xb8; line++)
+	for (int line = 0; line < 8; line++)
 	{
 		oled_goto_page(line);
 		oled_goto_column(0);
@@ -89,25 +90,6 @@ void write_data(uint8_t data) {
 	*address = data;
 }
 
-
-//oled_split_string() {
-//
-//}
-
-
-
-// Tar inn en oppdelt streng vha. oled_split_string og skriver til skjerm
-//void oled_print_char(char c) {
-	//
-	//
-	//int A = 34; // Fordi A-bytene er på plass 33 i font8-arrayet
-	//for (int i = 0; i < 8; i++)
-	//{ // Fordi font8 består av 8 byte per bokstav
-		//int byte = pgm_read_byte(&font8[A][i]); // Henter data fra PROGMEM
-		//write_data(byte);
-	//}
-//}
-
 void oled_print_char(char c) {
 	if (' ' <= c && c <= '~') {
 		for (int i = 0; i < 8; i++) {
@@ -126,19 +108,9 @@ void oled_print_string(const char* string) {
 }
 
 void oled_set_home() {
-	oled_set_position(1,1);
-	oled_print_string("MAIN MENU");
+	oled_set_position(0,1);
+	oled_print_string("---MAIN MENU---");
 	
+	oled_set_position(7,1);
+	oled_print_string("<< RETURN");
 }
-
-//void write_command(uint8_t command) {
-	//volatile char *address = (char*)0x1000;
-	//address[0] = command;
-//}
-//
-//void write_data(uint8_t data) {
-	//volatile char *address = (char*)0x1200;
-	//address[0] = data;
-//}
-
-
