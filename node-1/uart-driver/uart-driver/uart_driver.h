@@ -18,9 +18,9 @@
 
 void usart_init(uint8_t ubrr);
 
-void usart_transmit(unsigned char data);
+void usart_transmit(uint8_t data);
 
-unsigned char usart_receive(void);
+uint8_t usart_receive(void);
 
 void usart_flush(void);
 

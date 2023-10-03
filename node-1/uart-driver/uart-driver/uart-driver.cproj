@@ -142,6 +142,15 @@
     <Compile Include="adc.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="mcp.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="mcp.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="mcp2515.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="menu.h">
       <SubType>compile</SubType>
     </Compile>
@@ -164,6 +173,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="oled.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="spi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="spi.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="sram_test.c">

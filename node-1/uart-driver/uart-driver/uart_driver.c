@@ -10,8 +10,8 @@
 
 void usart_init(uint8_t ubrr) {
 	/* Set baud rate */
-	UBRR0H = (unsigned char)(ubrr>>8);
-	UBRR0L = (unsigned char)ubrr;
+	UBRR0H = (uint8_t)(ubrr>>8);
+	UBRR0L = (uint8_t)ubrr;
 	/* Enable receiver and transmitter */
 	UCSR0B = (1<<RXEN0)|(1<<TXEN0);
 	/* Set frame format: 8data, 1stop bit */
@@ -22,7 +22,7 @@ void usart_init(uint8_t ubrr) {
 
 
 
-void usart_transmit(unsigned char data) {
+void usart_transmit(uint8_t data) {
 	/* Wait for empty transmit buffer */
 	while ( !( UCSR0A & (1<<UDRE0)) ) {	
 	}
@@ -31,7 +31,7 @@ void usart_transmit(unsigned char data) {
 	UDR0 = data;
 }
 
-unsigned char usart_receive(void) {
+uint8_t usart_receive(void) {
 	/* Wait for data to be received */
 	while ( !(UCSR0A & (1<<RXC0)) ) {
 	}
@@ -40,7 +40,7 @@ unsigned char usart_receive(void) {
 }
 
 void usart_flush(void) {
-	unsigned char dummy;
+	uint8_t dummy;
 	while ( UCSR0A & (1<<RXC0) ) {
 		dummy = UDR0;
 	}

@@ -4,6 +4,8 @@
 
 adc.c
 
+mcp.c
+
 menu.c
 
 joystick.c
@@ -11,6 +13,8 @@ joystick.c
 main.c
 
 oled.c
+
+spi.c
 
 sram_test.c
 
