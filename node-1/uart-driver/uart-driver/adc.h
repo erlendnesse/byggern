@@ -5,11 +5,11 @@
  *  Author: jonassfr
  */
 
-#include <stdint.h>
 
 
 #ifndef ADC_H_
 #define ADC_H_
+#include <stdint.h>
 
 void adc_init();
 
