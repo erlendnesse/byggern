@@ -12,9 +12,9 @@ struct Message {
 
 
 int can_init();
-void can_write(struct Message msg);
+void can_write(struct Message * msg);
 struct Message can_read(); 
-void can_loopback_test(char *str);
+void can_loopback_test();
 
 
 #endif

@@ -119,3 +119,6 @@ void mcp2515_bit_modify(uint8_t address, uint8_t mask, uint8_t data) {
 void mcp2515_mode_select(uint8_t mode) {
 	mcp2515_bit_modify(MCP_CANCTRL, 0b11100000, mode);
 }
+
+
+
