@@ -9,9 +9,10 @@ struct Message {
 };
 
 
-void mcp2515_transmission(struct Message msg);
-struct Message mcp2515_reception(); 
-void mcp2515_print(char *str);
+int can_init();
+void can_write(struct Message msg);
+struct Message can_read(); 
+void can_loopback_test(char *str);
 
 
 #endif
