@@ -4,6 +4,8 @@
 
 adc.c
 
+can.c
+
 mcp.c
 
 menu.c

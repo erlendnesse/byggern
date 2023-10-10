@@ -6,10 +6,13 @@
 
 int can_init() {
     int err = 0;
-    int err = mcp2515_init();
+    err = mcp2515_init();
+	
+	
+	mcp2515_bit_modify(MCP_CANINTE, 0b00000001, 0b00000001); //rx interrupt enable
     mcp2515_mode_select(MODE_NORMAL);
 
-    mcp2515_bit_modify(MCP_CANINTE, 0b00000001, 0b00000001); //rx interrupt enable
+    
 
     return err;
 }

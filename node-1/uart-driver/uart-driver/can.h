@@ -1,6 +1,8 @@
 #ifndef CAN_H_
 #define CAN_H_
 
+#include <stdint.h>
+
 
 struct Message {
     uint16_t id;

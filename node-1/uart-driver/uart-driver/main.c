@@ -31,10 +31,10 @@ int main(void)
 	adc_init();
 	joystick_init();
 	oled_init();
-	if (can_init()) {
-		printf("Can init failed \r\n");
-		return -1;
-	}
+	//if (can_init()) {
+		//printf("Can init failed \r\n");
+		//return -1;
+	//}
 	
 	// Test SRAM functionality
 	if (SRAM_test()) {
@@ -42,7 +42,7 @@ int main(void)
 		return -1;
 	}
 	
-	//game_fsm();
+	game_fsm();
 	// MAIN LOOP
     while (1) {
 		can_loopback_test("HEI DER");
