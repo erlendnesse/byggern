@@ -74,7 +74,7 @@ void mcp2515_reset() {
 void mcp2515_rts(int buffer){
 	
 	spi_ss_set(0);
-	uint8_t data;
+	uint8_t data = 0;
 	
 	if( buffer == 0) {
 		data = MCP_RTS_TX0;

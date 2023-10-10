@@ -17,6 +17,7 @@
 #include "spi.h"
 #include "mcp.h"
 #include "sram_test.h"
+#include "can.h"
 
 
 int main(void)
@@ -30,8 +31,8 @@ int main(void)
 	adc_init();
 	joystick_init();
 	oled_init();
-	if (mcp2515_init()) {
-		printf("mcp2515 init failed \r\n");
+	if (can_init()) {
+		printf("Can init failed \r\n");
 		return -1;
 	}
 	
@@ -41,11 +42,13 @@ int main(void)
 		return -1;
 	}
 	
-	mcp2515_mode_select(MODE_LOOPBACK);
 	//game_fsm();
-	// MAIN LOOP
+	// MAIN LOOP	
+	can_loopback_test();
+	uint8_t value = mcp2515_read(MCP_CANSTAT);
+	printf("canstat: 0x%x \r\n", value);
     while (1) {
-		mcp2515_print("ABC");
+		can_loopback_test();
 		_delay_ms(6000);
 		//mcp2515_reception(0x11, 2);
 		_delay_ms(1000);

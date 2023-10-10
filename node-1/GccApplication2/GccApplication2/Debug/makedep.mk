@@ -2,25 +2,17 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
-adc.c
+can_controller.c
 
-can.c
+can_interrupt.c
 
-mcp.c
+Device_Startup\startup_sam3xa.c
 
-menu.c
-
-joystick.c
+Device_Startup\system_sam3xa.c
 
 main.c
 
-oled.c
+printf-stdarg.c
 
-spi.c
-
-sram_test.c
-
-uart_driver.c
-
-xmem.c
+uart.c
 

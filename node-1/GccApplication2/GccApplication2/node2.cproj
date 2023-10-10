@@ -20,26 +20,54 @@
     <OverrideVtor>false</OverrideVtor>
     <CacheFlash>true</CacheFlash>
     <ProgFlashFromRam>true</ProgFlashFromRam>
-    <RamSnippetAddress />
+    <RamSnippetAddress>0x20000000</RamSnippetAddress>
     <UncachedRange />
     <preserveEEPROM>true</preserveEEPROM>
-    <OverrideVtorValue />
+    <OverrideVtorValue>exception_table</OverrideVtorValue>
     <BootSegment>2</BootSegment>
     <ResetRule>0</ResetRule>
     <eraseonlaunchrule>0</eraseonlaunchrule>
     <EraseKey />
     <AsfFrameworkConfig>
       <framework-data xmlns="">
-  <options />
-  <configurations />
-  <files />
-  <documentation help="" />
-  <offline-documentation help="" />
-  <dependencies>
-    <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.52.0" />
-  </dependencies>
-</framework-data>
+        <options />
+        <configurations />
+        <files />
+        <documentation help="" />
+        <offline-documentation help="" />
+        <dependencies>
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.52.0" />
+        </dependencies>
+      </framework-data>
     </AsfFrameworkConfig>
+    <avrtool>com.atmel.avrdbg.tool.atmelice</avrtool>
+    <avrtoolserialnumber>J41800035774</avrtoolserialnumber>
+    <avrdeviceexpectedsignature>0x285E0A60</avrdeviceexpectedsignature>
+    <custom>
+      <ToolOptions>
+        <InterfaceProperties>
+        </InterfaceProperties>
+        <InterfaceName>
+        </InterfaceName>
+      </ToolOptions>
+      <ToolType>custom</ToolType>
+      <ToolNumber>
+      </ToolNumber>
+      <ToolName>Custom Programming Tool</ToolName>
+    </custom>
+    <avrtoolinterface>JTAG</avrtoolinterface>
+    <com_atmel_avrdbg_tool_atmelice>
+      <ToolOptions>
+        <InterfaceProperties>
+          <JtagDbgClock>7500000</JtagDbgClock>
+        </InterfaceProperties>
+        <InterfaceName>JTAG</InterfaceName>
+      </ToolOptions>
+      <ToolType>com.atmel.avrdbg.tool.atmelice</ToolType>
+      <ToolNumber>J41800035774</ToolNumber>
+      <ToolName>Atmel-ICE</ToolName>
+    </com_atmel_avrdbg_tool_atmelice>
+    <avrtoolinterfaceclock>7500000</avrtoolinterfaceclock>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -164,72 +192,6 @@
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="node1%28dag1-5%29\adc.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="node1%28dag1-5%29\adc.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="node1%28dag1-5%29\can.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="node1%28dag1-5%29\can.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="node1%28dag1-5%29\fonts.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="node1%28dag1-5%29\joystick.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="node1%28dag1-5%29\joystick.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="node1%28dag1-5%29\mcp.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="node1%28dag1-5%29\mcp.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="node1%28dag1-5%29\mcp2515.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="node1%28dag1-5%29\menu.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="node1%28dag1-5%29\menu.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="node1%28dag1-5%29\oled.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="node1%28dag1-5%29\oled.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="node1%28dag1-5%29\spi.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="node1%28dag1-5%29\spi.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="node1%28dag1-5%29\sram_test.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="node1%28dag1-5%29\sram_test.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="node1%28dag1-5%29\uart_driver.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="node1%28dag1-5%29\uart_driver.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="node1%28dag1-5%29\xmem.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="node1%28dag1-5%29\xmem.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="printf-stdarg.c">
       <SubType>compile</SubType>
     </Compile>
@@ -245,7 +207,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Device_Startup\" />
-    <Folder Include="node1%28dag1-5%29" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Device_Startup\sam3x8e_flash.ld">
