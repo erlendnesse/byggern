@@ -46,6 +46,7 @@
     <custom>
       <ToolOptions>
         <InterfaceProperties>
+          <JtagDbgClock>7500000</JtagDbgClock>
         </InterfaceProperties>
         <InterfaceName>
         </InterfaceName>
@@ -181,6 +182,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="can_interrupt.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="delay.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="delay.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Device_Startup\startup_sam3xa.c">

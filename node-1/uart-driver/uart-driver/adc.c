@@ -7,6 +7,7 @@
 
 #include "adc.h"
 #include <avr/io.h>
+#include <stdio.h>
 
 	//TCCR3B |= (1 << WGM33);
 	//TCCR3A |= (1 << WGM31);
@@ -46,6 +47,7 @@ uint8_t adc_read(uint8_t channel) {
 			break;
 
 	}
+	return -1;
 }
 
 

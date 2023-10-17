@@ -6,6 +6,8 @@ adc.c
 
 can.c
 
+interrupt.c
+
 mcp.c
 
 menu.c

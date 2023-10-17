@@ -18,6 +18,7 @@
 #include "mcp.h"
 #include "sram_test.h"
 #include "can.h"
+#include "interrupt.h"
 
 
 int main(void)
@@ -31,6 +32,7 @@ int main(void)
 	adc_init();
 	joystick_init();
 	oled_init();
+	interrupt_init();
 	if (can_init()) {
 		printf("Can init failed \r\n");
 		return -1;
@@ -42,16 +44,26 @@ int main(void)
 		return -1;
 	}
 	
+	
+	
 	//game_fsm();
 	// MAIN LOOP	
-	can_loopback_test();
-	uint8_t value = mcp2515_read(MCP_CANSTAT);
-	printf("canstat: 0x%x \r\n", value);
+	//uint8_t value = mcp2515_read(MCP_CANSTAT);
+	//printf("canstat: 0x%x \r\n", value);
+	
+	
+	
+	
+	struct Message msg = {
+		.data[0] = 255,
+		.id = 9,
+		.length = 8
+		};
+		
+	struct Message msg_r;
     while (1) {
-		can_loopback_test();
-		_delay_ms(6000);
-		//mcp2515_reception(0x11, 2);
-		_delay_ms(1000);
+		can_write(&msg);
+		_delay_ms(3000);
 	}
 
 	return 0;

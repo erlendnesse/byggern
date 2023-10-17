@@ -28,6 +28,4 @@ void joystick_init();
 struct pos pos_read(void);
 
 
-
-
 #endif /* INCFILE1_H_ */

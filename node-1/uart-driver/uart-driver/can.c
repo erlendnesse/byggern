@@ -3,25 +3,39 @@
 #include "mcp.h"
 #include <stdio.h>
 
+#define F_CPU 16000000
+#define CAN_CS          PB4
+#define BAUDRATE        250000
+#define NUMBER_OF_TQ    16
+
+#define PROPAG  2
+#define PS1     6
+#define PS2     7
 
 int can_init() {
 	int err = 0;
 	err = mcp2515_init();
-	uint8_t cnf1_data = 0b0;
-	uint8_t cnf2_data = 0b0;
-	uint8_t cnf3_data = 0b0;
-	mcp2515_bit_modify(MCP_CNF1, 0b0, cnf1_data);
-	mcp2515_bit_modify(MCP_CNF2, 0b0, cnf2_data);
-	mcp2515_bit_modify(MCP_CNF3, 0b0, cnf3_data);
+	//uint8_t cnf1_data = 0b11000111; // 250kbps sjw=4
+	//uint8_t cnf2_data = 0b10111010; //propseg = 2, ps1 = 7
+	//uint8_t cnf3_data = 7; //ps2 = 7
+	//mcp2515_bit_modify(MCP_CNF1, cnf1_data, cnf1_data);
+	//mcp2515_bit_modify(MCP_CNF2, cnf2_data, cnf2_data);
+	//mcp2515_bit_modify(MCP_CNF3, cnf3_data, cnf3_data);
+	//
+	//if (
+	//!((mcp2515_read(MCP_CNF1) & cnf1_data) == cnf1_data) ||
+	//!((mcp2515_read(MCP_CNF2) & cnf2_data) == cnf2_data) || 
+	//!((mcp2515_read(MCP_CNF3) & cnf3_data) == cnf3_data)
+	//) 
+	//{
+		//err = -1;
+	//}
 	
-	if (
-	((mcp2515_read(MCP_CNF1) & cnf1_data) == cnf1_data) ||
-	((mcp2515_read(MCP_CNF2) & cnf2_data) == cnf2_data) || 
-	((mcp2515_read(MCP_CNF3) & cnf3_data) == cnf3_data)
-	) 
-	{
-		
-	}
+    uint8_t BRP = F_CPU / (2 * NUMBER_OF_TQ * BAUDRATE);
+
+    mcp2515_write(MCP_CNF1, SJW4 | (BRP - 1));
+    mcp2515_write(MCP_CNF2, BTLMODE | SAMPLE_3X | ((PS1 - 1) << 3) | (PROPAG - 1));
+    mcp2515_write(MCP_CNF3, WAKFIL_DISABLE | (PS2 - 1));
 	
 	mcp2515_mode_select(MODE_NORMAL);
 	mcp2515_bit_modify(MCP_CANINTE, 0b11111111, 0b00000001); //rx interrupt enable
@@ -32,7 +46,7 @@ void can_write(struct Message *msg) {
 	if (msg->length > 8) {
 		printf("ERROR, message length value to high \r\n");
 	}
-	mcp2515_bit_modify(MCP_TXB0CTRL, 0b00001000, 0b000001000); //remove on normal mode?
+
 	mcp2515_write(MCP_TXB0SIDH, msg->id / 8);
 	mcp2515_write(MCP_TXB0SIDL, (msg->id % 8) << 5);
 	mcp2515_write(MCP_TXB0DLC, msg->length);
@@ -40,7 +54,10 @@ void can_write(struct Message *msg) {
 	for (int i = 0; i < msg->length; i++) {
 		mcp2515_write(MCP_TXB0D0+i, msg->data[i]);
 	}
-	if (mcp2515_read(MCP_CANINTF) & 0b10100000) {
+	//mcp2515_bit_modify(MCP_TXB0CTRL, 0b00001000, 0b000001000); //remove on normal mode?
+	mcp2515_rts(0);
+	
+	if (mcp2515_read(MCP_CANINTF) & 0b00000000) {
 		printf("Message error \r\n");
 	}
 }
@@ -62,9 +79,9 @@ void can_loopback_test() {
 	mcp2515_reset();
 	mcp2515_mode_select(MODE_LOOPBACK);
 	struct Message m_w = {
-		.id = 10,
+		.id = 1,
 		.length = 8,
-		.data = "FUCKYO"
+		.data = "hello"
 	};
 	struct Message m_r = {0};
 	can_write(&m_w);
