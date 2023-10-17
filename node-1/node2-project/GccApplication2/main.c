@@ -10,8 +10,11 @@
 #include "uart.h"
 #include "printf-stdarg.h"
 #include "can_controller.h"
+#include "can_interrupt.h"
 #include "delay.h"
 #include <stdio.h>
+#include <stdint.h>
+
 
 int main(void)
 {
@@ -25,6 +28,7 @@ int main(void)
 	uint32_t can_br =  0x00143156; //3 << 16 | 3 << 12 | 2 << 8 | 7 << 4 | 7;
 		
 	can_init_def_tx_rx_mb(can_br);
+	led_init();
 	
 	
 	
@@ -41,19 +45,38 @@ int main(void)
     //uart_getchar(ch);
 	//UART_Handler();
 	
-	printf("main running");
-	
-   // MAIN LOOP
-   while (1) {
-	can_send(&msg, 0);
-	delay_ms(1000);
-	//can_receive(&msg_r, 5); 
-   }
 
+
+	uint8_t i = 0;
+   // MAIN LOOP
+	
+   while (1) {
+	printf("system core clock %d: \r\n", SystemCoreClock);
+	toggle_led(i);
+	//can_send(&msg, 0);
+	delay_ms(100);
+	//can_receive(&msg_r, 5); 
+	i++;
+	}
+	printf("system core clock %d: \r\n", SystemCoreClock);
    return 0;
-   
-   
-   
-   
-   
+}
+
+
+void toggle_led(uint8_t count) {
+	if (count % 2) {
+		PIOA->PIO_CODR = PIO_PA19 ;
+		PIOA->PIO_SODR |=  PIO_PA20;
+	}
+	else
+	{
+		PIOA->PIO_CODR = PIO_PA20;
+		PIOA->PIO_SODR |=  PIO_PA19;
+	}
+}
+
+void led_init() {
+	PMC->PMC_PCR = 1 << 12;
+	PIOA->PIO_OER |=  PIO_PA19 | PIO_PA20;
+	
 }

@@ -16,5 +16,7 @@ main.c
 
 printf-stdarg.c
 
+pwm.c
+
 uart.c
 

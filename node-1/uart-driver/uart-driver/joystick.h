@@ -26,6 +26,6 @@ dir_t dir();
 
 void joystick_init();
 struct pos pos_read(void);
-
+void joystick_transmit();
 
 #endif /* INCFILE1_H_ */

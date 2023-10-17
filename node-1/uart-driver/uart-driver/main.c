@@ -32,7 +32,7 @@ int main(void)
 	adc_init();
 	joystick_init();
 	oled_init();
-	interrupt_init();
+	//interrupt_init();
 	if (can_init()) {
 		printf("Can init failed \r\n");
 		return -1;
@@ -60,10 +60,10 @@ int main(void)
 		.length = 8
 		};
 		
-	struct Message msg_r;
     while (1) {
-		can_write(&msg);
-		_delay_ms(3000);
+		//can_write(&msg);
+		_delay_ms(2000);
+		joystick_transmit();
 	}
 
 	return 0;

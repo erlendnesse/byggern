@@ -2,7 +2,9 @@
 #define CAN_H_
 
 #include <stdint.h>
-#define  ID_POSITION 1
+
+//Definisjoner av forskjellige ID-er. Oppdateres etterhvert. 
+#define ID_POSITION 1
 
 
 struct Message {

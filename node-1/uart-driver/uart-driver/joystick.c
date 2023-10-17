@@ -8,6 +8,7 @@
 #include "joystick.h"
 #include "adc.h"
 #include <avr/io.h>
+#include "can.h"
 
 void joystick_init(){
 	PORTD |= (1 << PD5); //setup pullup for PD5 which is button input from Joystick
@@ -68,4 +69,23 @@ dir_t dir() {
 		return NEUTRAL;
 	}
 	return NEUTRAL;
+}
+
+void joystick_transmit() {
+	//Lese joystick posisjon og lagre til struct
+	struct pos joy_pos = pos_read();
+	
+	//Oppretter structs iden can_write tar inn en struct
+	struct Message pos_message = {.id = ID_POSITION, .length = 2};
+	
+	
+	
+	//Konverterer til uint8_t siden Message structen er definert for denne typen
+	pos_message.data[0] = (uint8_t)adc_read(0); //joy_pos.x_pos;
+	pos_message.data[1] = (uint8_t)adc_read(1); //joy_pos.y_pos;
+	
+	
+	//Senda driden
+	can_write(&pos_message);
+	
 }
