@@ -12,6 +12,8 @@
 #include "can_controller.h"
 #include "can_interrupt.h"
 #include "delay.h"
+#include "timer_counter.h"
+#include "pwm_servo.h"
 #include <stdio.h>
 #include <stdint.h>
 
@@ -29,8 +31,9 @@ int main(void)
 		
 	can_init_def_tx_rx_mb(can_br);
 	led_init();
-	
-	
+	//timer_counter_init();
+	PWM_init();
+
 	
 
 	CAN_MESSAGE msg = {
@@ -49,16 +52,14 @@ int main(void)
 
 	uint8_t i = 0;
    // MAIN LOOP
-	
    while (1) {
-	printf("system core clock %d: \r\n", SystemCoreClock);
 	toggle_led(i);
 	//can_send(&msg, 0);
-	delay_ms(100);
+	//PWM->PWM_CH_NUM[5].PWM_CDTY = 780;
+	delay_ms(1000);
 	//can_receive(&msg_r, 5); 
 	i++;
 	}
-	printf("system core clock %d: \r\n", SystemCoreClock);
    return 0;
 }
 

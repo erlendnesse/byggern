@@ -62,7 +62,7 @@ int main(void)
 		
     while (1) {
 		//can_write(&msg);
-		_delay_ms(2000);
+		//_delay_ms(2000);
 		joystick_transmit();
 	}
 

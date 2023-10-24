@@ -16,7 +16,9 @@ main.c
 
 printf-stdarg.c
 
-pwm.c
+pwm_servo.c
+
+timer_counter.c
 
 uart.c
 

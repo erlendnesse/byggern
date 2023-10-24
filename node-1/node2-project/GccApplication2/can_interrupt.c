@@ -17,7 +17,9 @@
 
 #include "can_controller.h"
 
-#define DEBUG_INTERRUPT 1
+#include "pwm_servo.h"
+
+#define DEBUG_INTERRUPT 0
 
 /**
  * \brief CAN0 Interrupt handler for RX, TX and bus error interrupts
@@ -38,12 +40,17 @@ void CAN0_Handler( void )
 		if(can_sr & CAN_SR_MB1)  //Mailbox 1 event
 		{
 			can_receive(&message, 1);
-
+			if(message.id == 1) { //id of joystick msg
+				pwm_set_duty_cycle(message.data[0]);
+			}
 		}
 		else if(can_sr & CAN_SR_MB2) //Mailbox 2 event
 		
 		{
 			can_receive(&message, 2);
+			if(message.id == 1) { //id of joystick msg
+				pwm_set_duty_cycle(message.data[0]);
+			}
 		}
 		else
 		{
