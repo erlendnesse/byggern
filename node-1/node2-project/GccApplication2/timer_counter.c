@@ -26,8 +26,8 @@
 void timer_counter_init() {
 	//REG_TC0_CCR0
 	
-	PMC->PMC_PCR = 1 << 12;
-	PIOB->PIO_ABSR |= 1 << 25;
+	PMC->PMC_PCR = ID_PIOB;
+	//PIOB->PIO_ABSR |= 1 << 25; //kanskje bare piss?
 	PIOB->PIO_PER |= 1 << 25;
 	PIOB->PIO_OER |= 1 << 25;
 	//*k |= 1;

@@ -10,5 +10,6 @@
 #define INTERRUPT_H_
 
 void interrupt_init();
+static volatile int interruptCount = 0;
 
 #endif /* INTERRUPT_H_ */

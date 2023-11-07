@@ -187,6 +187,12 @@
     <Compile Include="can_interrupt.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="dac.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="dac.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="delay.c">
       <SubType>compile</SubType>
     </Compile>
@@ -202,6 +208,18 @@
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="motor.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="motor.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="pid.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="pid.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="printf-stdarg.c">
       <SubType>compile</SubType>
     </Compile>
@@ -212,6 +230,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="pwm_servo.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="solenoid.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="solenoid.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="timer_counter.c">

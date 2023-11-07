@@ -16,6 +16,9 @@
 #include "pwm_servo.h"
 #include <stdio.h>
 #include <stdint.h>
+#include "motor.h"
+#include "pid.h"
+#include "solenoid.h"
 
 
 int main(void)
@@ -28,38 +31,61 @@ int main(void)
 	configure_uart();
 	WDT->WDT_MR |= 1 << 15; //watchdog timer off
 	uint32_t can_br =  0x00143156; //3 << 16 | 3 << 12 | 2 << 8 | 7 << 4 | 7;
-		
-	can_init_def_tx_rx_mb(can_br);
 	led_init();
 	//timer_counter_init();
 	PWM_init();
-
+	motor_init();
+	
+	//Init Pid with
+	//k_p, k_i, k_d,  time_step,  max_control_input
+	//pid_init(1,1,1,tbd,tbd);
 	
 
-	CAN_MESSAGE msg = {
-		.id = 14,
-		.data_length = 3,
-		.data = "node2"
-	};
+
+	
 	
 
 	
 	//uart_putchar('F');
     //uart_getchar(ch);
 	//UART_Handler();
-	
-
-
+	//motor_run();
+	can_init_def_tx_rx_mb(can_br);
 	uint8_t i = 0;
+	uint16_t encoder_value = 0;
    // MAIN LOOP
-   while (1) {
-	toggle_led(i);
-	//can_send(&msg, 0);
-	//PWM->PWM_CH_NUM[5].PWM_CDTY = 780;
-	delay_ms(1000);
-	//can_receive(&msg_r, 5); 
-	i++;
+   while (1) 
+   {
+		//motor_run();
+	    //motor_set_speed(65535);
+		toggle_led(i);
+		//can_send(&msg, 0);
+		//PWM->PWM_CH_NUM[5].PWM_CDTY = 780;
+		delay_ms(50);
+		
+		//PIOD->PIO_CODR = PIO_PD0;
+		motor_read_encoder();
+		
+		printf("SLIDER POS VALUE: %d\r", message.data[2]);
+		
+	
+		
+		
+		//printf("ENCODER VALUE: %d \r", encoder_value);
+		
+		//prev_value = message.data[0];
+		//
+		//if (prev_value == message.data[0]) {
+			//motor_run(160);
+		//}
+		//
+		//motor_run(message.data[0]);
+		//pid_regulator(joystick input, data fra enkoder);
+		//can_receive(&msg_r, 5); 
+		i++;
+	
 	}
+	
    return 0;
 }
 
@@ -77,7 +103,6 @@ void toggle_led(uint8_t count) {
 }
 
 void led_init() {
-	PMC->PMC_PCR = 1 << 12;
 	PIOA->PIO_OER |=  PIO_PA19 | PIO_PA20;
-	
 }
+

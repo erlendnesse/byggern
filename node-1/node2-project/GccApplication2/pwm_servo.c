@@ -19,7 +19,7 @@ void PWM_init(void){
 	PIOC->PIO_PDR |= PIO_PDR_P19;// Disable Register
 	PIOC->PIO_ABSR |= PIO_ABSR_P19;// Peripheral Select
 
-	PMC->PMC_PCR = PMC_PCR_EN;
+	PMC->PMC_PCR |= PMC_PCR_EN;
 	/* PWM Clock Register*/
 	PWM->PWM_CLK |= 1 << PWM_CLK_DIVA_Pos;
 	PWM->PWM_SCM |= PWM_SCM_UPDM_MODE0;
@@ -48,6 +48,6 @@ void pwm_set_duty_cycle(uint32_t joystick_pos) {
 		PWM->PWM_CH_NUM[5].PWM_CDTY = duty_cycle;
 	}
 	
-	printf("duty cycle calc: %d\r", duty_cycle);
+	//printf("duty cycle calc: %d\r", duty_cycle);
 }
 

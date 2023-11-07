@@ -32,7 +32,7 @@ int main(void)
 	adc_init();
 	joystick_init();
 	oled_init();
-	//interrupt_init();
+	interrupt_init();
 	if (can_init()) {
 		printf("Can init failed \r\n");
 		return -1;
@@ -62,8 +62,9 @@ int main(void)
 		
     while (1) {
 		//can_write(&msg);
-		//_delay_ms(2000);
+		_delay_ms(130);
 		joystick_transmit();
+		//printf("SLIDER POS VALUE: %d\r", adc_read(2));
 	}
 
 	return 0;

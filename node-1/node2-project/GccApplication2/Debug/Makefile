@@ -40,12 +40,16 @@ SUBDIRS :=  \
 C_SRCS +=  \
 ../can_controller.c \
 ../can_interrupt.c \
+../dac.c \
 ../delay.c \
 ../Device_Startup/startup_sam3xa.c \
 ../Device_Startup/system_sam3xa.c \
 ../main.c \
+../motor.c \
+../pid.c \
 ../printf-stdarg.c \
 ../pwm_servo.c \
+../solenoid.c \
 ../timer_counter.c \
 ../uart.c
 
@@ -59,48 +63,64 @@ ASM_SRCS +=
 OBJS +=  \
 can_controller.o \
 can_interrupt.o \
+dac.o \
 delay.o \
 Device_Startup/startup_sam3xa.o \
 Device_Startup/system_sam3xa.o \
 main.o \
+motor.o \
+pid.o \
 printf-stdarg.o \
 pwm_servo.o \
+solenoid.o \
 timer_counter.o \
 uart.o
 
 OBJS_AS_ARGS +=  \
 can_controller.o \
 can_interrupt.o \
+dac.o \
 delay.o \
 Device_Startup/startup_sam3xa.o \
 Device_Startup/system_sam3xa.o \
 main.o \
+motor.o \
+pid.o \
 printf-stdarg.o \
 pwm_servo.o \
+solenoid.o \
 timer_counter.o \
 uart.o
 
 C_DEPS +=  \
 can_controller.d \
 can_interrupt.d \
+dac.d \
 delay.d \
 Device_Startup/startup_sam3xa.d \
 Device_Startup/system_sam3xa.d \
 main.d \
+motor.d \
+pid.d \
 printf-stdarg.d \
 pwm_servo.d \
+solenoid.d \
 timer_counter.d \
 uart.d
 
 C_DEPS_AS_ARGS +=  \
 can_controller.d \
 can_interrupt.d \
+dac.d \
 delay.d \
 Device_Startup/startup_sam3xa.d \
 Device_Startup/system_sam3xa.d \
 main.d \
+motor.d \
+pid.d \
 printf-stdarg.d \
 pwm_servo.d \
+solenoid.d \
 timer_counter.d \
 uart.d
 
@@ -136,6 +156,13 @@ LINKER_SCRIPT_DEP+=  \
 	@echo Finished building: $<
 	
 
+./dac.o: .././dac.c
+	@echo Building file: $<
+	@echo Invoking: ARM/GNU C Compiler : 6.3.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAM3X8E__ -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\CMSIS\5.4.0\CMSIS\Core\Include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include"  -Og -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m3 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
 ./delay.o: .././delay.c
 	@echo Building file: $<
 	@echo Invoking: ARM/GNU C Compiler : 6.3.1
@@ -164,6 +191,20 @@ Device_Startup/system_sam3xa.o: ../Device_Startup/system_sam3xa.c
 	@echo Finished building: $<
 	
 
+./motor.o: .././motor.c
+	@echo Building file: $<
+	@echo Invoking: ARM/GNU C Compiler : 6.3.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAM3X8E__ -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\CMSIS\5.4.0\CMSIS\Core\Include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include"  -Og -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m3 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+./pid.o: .././pid.c
+	@echo Building file: $<
+	@echo Invoking: ARM/GNU C Compiler : 6.3.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAM3X8E__ -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\CMSIS\5.4.0\CMSIS\Core\Include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include"  -Og -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m3 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
 ./printf-stdarg.o: .././printf-stdarg.c
 	@echo Building file: $<
 	@echo Invoking: ARM/GNU C Compiler : 6.3.1
@@ -172,6 +213,13 @@ Device_Startup/system_sam3xa.o: ../Device_Startup/system_sam3xa.c
 	
 
 ./pwm_servo.o: .././pwm_servo.c
+	@echo Building file: $<
+	@echo Invoking: ARM/GNU C Compiler : 6.3.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAM3X8E__ -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\CMSIS\5.4.0\CMSIS\Core\Include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include"  -Og -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m3 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+./solenoid.o: .././solenoid.c
 	@echo Building file: $<
 	@echo Invoking: ARM/GNU C Compiler : 6.3.1
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAM3X8E__ -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\CMSIS\5.4.0\CMSIS\Core\Include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include"  -Og -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m3 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

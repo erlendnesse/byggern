@@ -187,6 +187,12 @@
     <Compile Include="oled.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="slider.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="slider.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="spi.c">
       <SubType>compile</SubType>
     </Compile>
