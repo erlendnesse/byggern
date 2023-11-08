@@ -25,4 +25,6 @@ void oled_print_char(char c);
 void oled_print_string(const char* string);
 void oled_set_home();
 
+void oled_set_game();
+
 #endif /* OLED_H_ */

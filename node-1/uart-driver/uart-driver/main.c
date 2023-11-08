@@ -45,12 +45,10 @@ int main(void)
 	}
 	
 	
-	
-	//game_fsm();
+	game_fsm();
 	// MAIN LOOP	
 	//uint8_t value = mcp2515_read(MCP_CANSTAT);
 	//printf("canstat: 0x%x \r\n", value);
-	
 	
 	
 	
@@ -65,8 +63,10 @@ int main(void)
 		_delay_ms(130);
 		joystick_transmit();
 		
-		
-		
+		if (game_finished) {
+			printf("GAME FINISHED\r\n");
+			return 0;
+		}
 	}
 
 	return 0;

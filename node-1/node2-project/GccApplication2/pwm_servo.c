@@ -41,7 +41,7 @@ void pwm_set_duty_cycle(uint32_t joystick_pos) {
 	else if (duty_cycle < min_duty_cycle_value) {
 		PWM->PWM_CH_NUM[5].PWM_CDTY = min_duty_cycle_value;
 	}
-	else if (duty_cycle > 135 && duty_cycle < 145) {
+	else if (duty_cycle > 125 && duty_cycle < 155) {
 		PWM->PWM_CH_NUM[5].PWM_CDTY = mean_duty_cycle_value;
 	}
 	else {

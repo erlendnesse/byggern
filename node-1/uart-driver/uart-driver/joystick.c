@@ -11,6 +11,7 @@
 #include "can.h"
 
 void joystick_init(){
+	DDRD |= (0 << PD5);
 	PORTD |= (1 << PD5); //setup pullup for PD5 which is button input from Joystick
 }
 
@@ -76,7 +77,7 @@ void joystick_transmit() {
 	struct pos joy_pos = pos_read();
 	
 	//Oppretter structs iden can_write tar inn en struct
-	struct Message pos_message = {.id = ID_POSITION, .length = 3};
+	struct Message pos_message = {.id = ID_POSITION, .length = 4};
 	
 	
 	
@@ -84,7 +85,9 @@ void joystick_transmit() {
 	pos_message.data[0] = (uint8_t)adc_read(0); //joy_pos.x_pos;
 	pos_message.data[1] = (uint8_t)adc_read(1); //joy_pos.y_pos;
 	pos_message.data[2] = (uint8_t)adc_read(2); //right slider value
-	
+	uint8_t pd5_value = (PIND >> PIND5) & 1;
+	pos_message.data[3] = pd5_value;
+
 	//printf("SLIDER POS VALUE: %d\r\n", pos_message.data[2]);
 	
 	

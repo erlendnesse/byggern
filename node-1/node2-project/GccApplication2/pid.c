@@ -26,8 +26,8 @@ float pid_regulator(float reference, float current_value) {
     float i_gain = PID.K_i * PID.error_sum;
     //float d_gain = PID.K_d * (error - PID.previous_error)/PID.Time_step;
 	
-	printf("I_gain: %d\t", i_gain);
-	printf("PID_error_sum: %d\r", PID.error_sum);
+	printf("Error: %d\r", (int)error);
+	//printf("PID_error_sum: %d\r", (int)PID.error_sum);
 
     //updating previous error
     PID.previous_error = error;
@@ -39,15 +39,20 @@ float pid_regulator(float reference, float current_value) {
     {
         control_input = PID.Max_control_input;
     }
-    else if (control_input < 0) 
+    else if (control_input < (-PID.Max_control_input)) 
     {
         control_input = -PID.Max_control_input;
     }
+	
+	
+	
 	
 	if (reference == current_value) {
 		PID.error_sum = 0;
 		error = 0;
 	}
+	
+	
 	
 	
     return control_input;

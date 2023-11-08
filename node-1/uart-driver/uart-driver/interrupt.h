@@ -10,6 +10,8 @@
 #define INTERRUPT_H_
 
 void interrupt_init();
-static volatile int interruptCount = 0;
+extern volatile int interruptCount;
+
+extern volatile int game_finished;
 
 #endif /* INTERRUPT_H_ */

@@ -178,3 +178,13 @@ void oled_set_home() {
 	oled_set_position(7,1);
 	oled_print_string_large("<< Return");
 }
+
+void oled_set_game() {
+	struct menu_items game = {
+		.menu_index1 = "Score:  ",
+	};
+	oled_set_position(4,1);
+	oled_print_string_large(game.menu_index1);
+	oled_set_position(4,105);
+	oled_print_string_large("0");
+}

@@ -35,19 +35,8 @@ int main(void)
 	//timer_counter_init();
 	PWM_init();
 	motor_init();
-	
-	
-	
+	solenoid_init();
 
-
-	
-	
-
-	
-	//uart_putchar('F');
-    //uart_getchar(ch);
-	//UART_Handler();
-	//motor_run();
 	can_init_def_tx_rx_mb(can_br);
 	uint8_t i = 0;
 	uint16_t encoder_value = 0;
@@ -55,17 +44,28 @@ int main(void)
    float time_step = 1.0/50.0;
    
    //Init Pid with  k_p, k_i, k_d,  time_step,  max_control_input
-	pid_init(1,0.1,1,time_step,1404);
+	pid_init(0.1,0.01,1.0,time_step,1404);
    
 
    while (1) 
    {
 		//motor_run();
 	    //motor_set_speed(65535);
+		//motor_enable(1);
 		toggle_led(i);
 		//can_send(&msg, 0);
 		//PWM->PWM_CH_NUM[5].PWM_CDTY = 780;
-		delay_ms(20);
+		delay_ms(10);
+		
+		motor_run(message.data[2]);
+		
+		
+		if (!(i % 3)){
+			if(!message.data[3]) {
+				printf("button_pressed\r");
+				solenoid_shoot(1);
+			}
+		}
 		
 		//PIOD->PIO_CODR = PIO_PD0;
 		
@@ -85,10 +85,18 @@ int main(void)
 			//motor_run(160);
 		//}
 		
-		motor_run(message.data[2]);
+		
+		//motor_enable(1);
+		//motor_set_dir(1);
+		//motor_set_speed(MOTOR_SPEED_5V);
+		//motor_enable(0);
+	
+		
+		
 		
 			//printf("Current encoder position is:  %d\r\n", motor_read_encoder());
-		
+			
+			
 		
 		//can_receive(&msg_r, 5); 
 		i++;

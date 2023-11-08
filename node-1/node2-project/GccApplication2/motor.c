@@ -90,6 +90,9 @@ int motor_read_encoder() {
 
 	
 	float scale_slider_output(float value) {
+		if (value < 9) {
+			value = 0;
+		}
 		float scaled_val = value * 1404/255;
 		return scaled_val;
 	}
@@ -101,73 +104,49 @@ int motor_read_encoder() {
 	//joystick - 0-256 midtpunkt 160
 
 void motor_run(uint8_t dir) {
-	//printf("motor run called: value: %d\r", dir);
+	
+	
 	uint8_t direction = 0;
 	uint8_t enable = 0;
 	
 	
-	//if (dir >= 128) {
-		//enable = 1;
-		//direction = 1;
-		//motor_set_dir(1);
-		//motor_set_speed(30000);
-	//}
-	//else if (dir < 128) {
-		//enable = 1;
-		//direction = 0;
-		//motor_set_dir(0);
-		//motor_set_speed(30000);
-	//}
-	//else {
-		//enable = 0;
-	//}
-	//
-	//
-	//motor_enable(enable);
-	
-	
-	////PID
-	
-	
 	int encoder_output = motor_read_encoder();
-	int slider_pos =  (int) scale_slider_output(dir);
+	int slider_pos =  (int)scale_slider_output(dir);
 	
 
-	//printf("slider_pos:  %d\t", slider_pos);
-	//printf("enocer_pos: %d\r\n", encoder_output);
-	
 	
 	float control_input = pid_regulator(slider_pos, encoder_output);
 	
-	printf("C_u: %d\t", (int)control_input);
 	
-	//if(control_input >= 702) {
-		//enable = 1;
-		//direction = 1;
-		//motor_set_dir(direction);
-		//motor_set_speed(control_input);
-		//
-		//
-	//}
-	//else if(control_input < 702){
-		//enable = 1;
-		//direction = 0;
-		//motor_set_dir(direction);
-		//motor_set_speed(-control_input);
-		//
-	//}
-	//else {
-		//enable = 0;
-	//}
+	
+	if(control_input > 10) {
+		enable = 1;
+		direction = 1;
+		motor_set_dir(direction);
+		control_input = (int)control_input*48;
+		if (control_input > MOTOR_SPEED_5V) {
+			control_input = MOTOR_SPEED_5V;
+		}
+		motor_set_speed(control_input);	
+		printf("C_inp: %d\t", (int)control_input);
+	}
+	else if(control_input < -10){
+		control_input = (int)-control_input*48;
+		if (control_input > MOTOR_SPEED_5V) {
+			control_input = MOTOR_SPEED_5V;
+		}
+		enable = 1;
+		direction = 0;
+		printf("C_inp: %d\t", (int)control_input);
+		motor_set_dir(direction);
+		motor_set_speed(control_input);
+	}
+	else {
+		enable = 0;
+	}
 	
 	
 	motor_enable(enable);
-	
-	
-	
-	
-	
-	
 }
 
 

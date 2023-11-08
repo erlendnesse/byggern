@@ -10,6 +10,7 @@
 #include "joystick.h"
 #include <util/delay.h>
 #include <avr/io.h>
+#include <stdio.h>
 
 //struct menu_items menu(void);
 
@@ -23,14 +24,23 @@ void game_fsm() {
 	oled_set_position(menu_index, 120);
 	oled_print_string_large("<");
 	volatile int direction = dir();
-	while(1) {
+	while(1) 
+	{
 		while(direction == NEUTRAL) {
 			direction = dir();
-			if (!(PIND & (1<<5) )) {
+			if (!(PIND & (1<<5))) 
+			{
 				printf("CLICKED Menu index: %d\r\n", menu_index);
 			}
 			_delay_ms(750);
+			if(menu_index == 1 && !(PIND & (1<<5)))
+			{
+				break;
+			}
 		}
+		if(menu_index == 1 && !(PIND & (1<<5))) {
+			break;
+			}
 		if (direction == UP && menu_index > 1) {
 			printf("UP\r\n");
 			oled_set_position(menu_index, 120);
@@ -49,4 +59,6 @@ void game_fsm() {
 		}
 		direction = NEUTRAL;
 	}
+	oled_reset();
+	oled_set_game();
 }
