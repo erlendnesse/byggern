@@ -36,9 +36,7 @@ int main(void)
 	PWM_init();
 	motor_init();
 	
-	//Init Pid with
-	//k_p, k_i, k_d,  time_step,  max_control_input
-	//pid_init(1,1,1,tbd,tbd);
+	
 	
 
 
@@ -54,6 +52,12 @@ int main(void)
 	uint8_t i = 0;
 	uint16_t encoder_value = 0;
    // MAIN LOOP
+   float time_step = 1.0/50.0;
+   
+   //Init Pid with  k_p, k_i, k_d,  time_step,  max_control_input
+	pid_init(1,0.1,1,time_step,1404);
+   
+
    while (1) 
    {
 		//motor_run();
@@ -61,14 +65,16 @@ int main(void)
 		toggle_led(i);
 		//can_send(&msg, 0);
 		//PWM->PWM_CH_NUM[5].PWM_CDTY = 780;
-		delay_ms(50);
+		delay_ms(20);
 		
 		//PIOD->PIO_CODR = PIO_PD0;
-		motor_read_encoder();
 		
-		printf("SLIDER POS VALUE: %d\r", message.data[2]);
+		//motor_read_encoder();
 		
-	
+		//printf("joystick POS VALUE: %d\r\n", message.data[1]);
+		
+		//printf("node 2: slider POS VALUE: %d\r\n", message.data[2]);
+		
 		
 		
 		//printf("ENCODER VALUE: %d \r", encoder_value);
@@ -78,9 +84,12 @@ int main(void)
 		//if (prev_value == message.data[0]) {
 			//motor_run(160);
 		//}
-		//
-		//motor_run(message.data[0]);
-		//pid_regulator(joystick input, data fra enkoder);
+		
+		motor_run(message.data[2]);
+		
+			//printf("Current encoder position is:  %d\r\n", motor_read_encoder());
+		
+		
 		//can_receive(&msg_r, 5); 
 		i++;
 	

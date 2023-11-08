@@ -83,7 +83,13 @@ void joystick_transmit() {
 	//Konverterer til uint8_t siden Message structen er definert for denne typen
 	pos_message.data[0] = (uint8_t)adc_read(0); //joy_pos.x_pos;
 	pos_message.data[1] = (uint8_t)adc_read(1); //joy_pos.y_pos;
-	pos_message.data[2] = (uint8_t)adc_read(2); //joy_pos.y_pos;
+	pos_message.data[2] = (uint8_t)adc_read(2); //right slider value
+	
+	//printf("SLIDER POS VALUE: %d\r\n", pos_message.data[2]);
+	
+	
+
+	
 	
 	
 	//Senda driden

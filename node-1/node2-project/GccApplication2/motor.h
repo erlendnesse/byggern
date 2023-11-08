@@ -26,4 +26,6 @@ int motor_read_encoder();
 
 void motor_run(uint8_t dir);
 
+float scale_slider_output(float value);
+
 #endif /* MOTOR_H_ */

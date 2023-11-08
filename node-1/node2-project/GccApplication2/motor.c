@@ -37,7 +37,7 @@ int motor_init() {
 }
 
 void motor_set_speed(uint16_t speed) {
-	printf("motor speed set to %d \r", speed);
+	//printf("motor speed set to %d \r", speed);
 	dac_write(speed);
 }
 
@@ -89,9 +89,11 @@ int motor_read_encoder() {
 }
 
 	
-	int scale_encoder_output(int value) {
-		int scaled_val = value * 1400/250;
+	float scale_slider_output(float value) {
+		float scaled_val = value * 1404/255;
+		return scaled_val;
 	}
+	
 	
 	
 	
@@ -99,46 +101,73 @@ int motor_read_encoder() {
 	//joystick - 0-256 midtpunkt 160
 
 void motor_run(uint8_t dir) {
-	printf("motor run called: value: %d\r", dir);
+	//printf("motor run called: value: %d\r", dir);
 	uint8_t direction = 0;
 	uint8_t enable = 0;
-	if (dir > 200) {
-		enable = 1;
-		direction = 1;
-	}
-	else if (dir < 130) {
-		enable = 1;
-		direction = 0;
-	}
-	else {
-		enable = 0;
-	}
+	
+	
+	//if (dir >= 128) {
+		//enable = 1;
+		//direction = 1;
+		//motor_set_dir(1);
+		//motor_set_speed(30000);
+	//}
+	//else if (dir < 128) {
+		//enable = 1;
+		//direction = 0;
+		//motor_set_dir(0);
+		//motor_set_speed(30000);
+	//}
+	//else {
+		//enable = 0;
+	//}
+	//
+	//
+	//motor_enable(enable);
+	
+	
+	////PID
+	
+	
+	int encoder_output = motor_read_encoder();
+	int slider_pos =  (int) scale_slider_output(dir);
+	
+
+	//printf("slider_pos:  %d\t", slider_pos);
+	//printf("enocer_pos: %d\r\n", encoder_output);
+	
+	
+	float control_input = pid_regulator(slider_pos, encoder_output);
+	
+	printf("C_u: %d\t", (int)control_input);
+	
+	//if(control_input >= 702) {
+		//enable = 1;
+		//direction = 1;
+		//motor_set_dir(direction);
+		//motor_set_speed(control_input);
+		//
+		//
+	//}
+	//else if(control_input < 702){
+		//enable = 1;
+		//direction = 0;
+		//motor_set_dir(direction);
+		//motor_set_speed(-control_input);
+		//
+	//}
+	//else {
+		//enable = 0;
+	//}
+	
+	
 	motor_enable(enable);
 	
 	
-	//read values from encoder and use it in a PID
-	int encoder_output = motor_read_encoder();
-	int current_pos = scale_encoder_output(encoder_output);
-	float control_input = pid_regulator(message.data[2], current_pos);
-	
-	if(control_input > 0) {
-		motor_set_dir(1);
-		motor_set_speed(control_input);
-		
-	}
-	else {
-		motor_set_dir(0);
-		motor_set_speed(-control_input);
-	}
 	
 	
-	motor_set_dir(direction);
-	motor_set_speed(MOTOR_SPEED_5V);
-	//delay_ms(50);
-	//motor_enable(0);
-	//delay_ms(10);
-	//motor_enable(0);
-	//motor_set_speed(MOTOR_SPEED_0V);
+	
+	
 }
 
 

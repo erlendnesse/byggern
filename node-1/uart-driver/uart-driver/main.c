@@ -64,7 +64,9 @@ int main(void)
 		//can_write(&msg);
 		_delay_ms(130);
 		joystick_transmit();
-		//printf("SLIDER POS VALUE: %d\r", adc_read(2));
+		
+		
+		
 	}
 
 	return 0;
