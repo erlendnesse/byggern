@@ -3,7 +3,6 @@
 
 #include <stdint.h>
 
-//Definisjoner av forskjellige ID-er. Oppdateres etterhvert. 
 #define ID_POSITION 1
 
 
@@ -12,7 +11,6 @@ struct Message {
 	uint8_t length;
 	uint8_t data[8];
 };
-
 
 int can_init();
 void can_write(struct Message * msg);

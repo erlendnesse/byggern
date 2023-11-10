@@ -55,9 +55,6 @@ ISR(INT0_vect) {
 			break;
 		case 5:
 			oled_print_string_large("5");
-			oled_set_position(1,0);
-			oled_print_string_large("---YOU WON---");
-			game_finished = 1;
 			break;
 		case 6:
 			oled_print_string_large("6");
@@ -103,20 +100,13 @@ ISR(INT0_vect) {
 			break;
 		case 20:
 			oled_print_string_large("20");
+			oled_set_position(1,0);
+			oled_print_string_large("---YOU LOST---");
+			game_finished = 1;
 			break;
 		default:
 			game_finished = 1;
 			break;
-	}
-	
-	//msg_r = can_read();
-	//printf("msg received ID:  %d\t", msg_r.id);
-	//printf("msg received data: ");
-	//for (int i = 0; i < 8; i++) {
-		//printf("%d\t", msg_r.data[i]);
-	//}
-	
-	//Clear interrupt flag?
-	
+	}	
 	GIFR |= (1<<INTF0);
 }

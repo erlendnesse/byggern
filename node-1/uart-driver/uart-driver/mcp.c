@@ -12,7 +12,6 @@
 #include <stdio.h>
 #include <util/delay.h>
 
-//MCP init innit?
 
 int mcp2515_init()
 {
@@ -20,18 +19,13 @@ int mcp2515_init()
 	mcp2515_reset(); // Send reset - command
 	_delay_ms(500);
 	
-	// Self - test
+	//Error check
 	uint8_t value = mcp2515_read(MCP_CANSTAT);
 	if ((value & MODE_MASK) != MODE_CONFIG)
 	{
 		printf(" MCP2515 is NOT in configuration mode after reset !\n");
 		return -1;
 	}
-	
-	
-	// More initialization
-	
-	
 	return 0;
 }
 
@@ -115,7 +109,7 @@ void mcp2515_bit_modify(uint8_t address, uint8_t mask, uint8_t data) {
 }
 
 
-//Setter modus ved � maske CANCTRL-registeret med 0b11100000 (bare 3 MSB som gjelder) med moduser definert i mcp2515.h
+//Setter modus ved aa maske CANCTRL-registeret med 0b11100000 (bare 3 MSB som gjelder) med moduser definert i mcp2515.h
 void mcp2515_mode_select(uint8_t mode) {
 	mcp2515_bit_modify(MCP_CANCTRL, 0b11100000, mode);
 }

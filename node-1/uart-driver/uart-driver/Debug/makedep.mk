@@ -18,8 +18,6 @@ main.c
 
 oled.c
 
-slider.c
-
 spi.c
 
 sram_test.c

@@ -23,9 +23,6 @@
 
 int main(void)
 {
-	// Set main sleep time
-    //_delay_ms(sleep_time);
-	
 	// Initialize functions
 	usart_init(MYUBRR);
 	xmem_init();
@@ -37,37 +34,17 @@ int main(void)
 		printf("Can init failed \r\n");
 		return -1;
 	}
-	
-	// Test SRAM functionality
 	if (SRAM_test()) {
 		printf("SRAM test failed\r\n");
 		return -1;
 	}
-	
-	
 	game_fsm();
-	// MAIN LOOP	
-	//uint8_t value = mcp2515_read(MCP_CANSTAT);
-	//printf("canstat: 0x%x \r\n", value);
-	
-	
-	
-	struct Message msg = {
-		.data[0] = 255,
-		.id = 9,
-		.length = 8
-		};
-		
     while (1) {
-		//can_write(&msg);
 		_delay_ms(130);
 		joystick_transmit();
-		
 		if (game_finished) {
-			printf("GAME FINISHED\r\n");
 			return 0;
 		}
 	}
-
 	return 0;
 }

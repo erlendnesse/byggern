@@ -78,24 +78,14 @@ void joystick_transmit() {
 	
 	//Oppretter structs iden can_write tar inn en struct
 	struct Message pos_message = {.id = ID_POSITION, .length = 4};
-	
-	
-	
+
 	//Konverterer til uint8_t siden Message structen er definert for denne typen
 	pos_message.data[0] = (uint8_t)adc_read(0); //joy_pos.x_pos;
 	pos_message.data[1] = (uint8_t)adc_read(1); //joy_pos.y_pos;
 	pos_message.data[2] = (uint8_t)adc_read(2); //right slider value
-	uint8_t pd5_value = (PIND >> PIND5) & 1;
+	uint8_t pd5_value = (PIND >> PIND5) & 1; //Read joystick button
 	pos_message.data[3] = pd5_value;
 
-	//printf("SLIDER POS VALUE: %d\r\n", pos_message.data[2]);
-	
-	
-
-	
-	
-	
-	//Senda driden
 	can_write(&pos_message);
 	
 }

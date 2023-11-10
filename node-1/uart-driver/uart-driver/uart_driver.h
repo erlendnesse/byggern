@@ -15,7 +15,6 @@
 
 #include <stdint.h>
 
-
 void usart_init(uint8_t ubrr);
 
 void usart_transmit(uint8_t data);

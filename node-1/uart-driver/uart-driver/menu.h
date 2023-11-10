@@ -19,7 +19,6 @@ struct menu_items {
 	char* menu_index6;
 };
 
-	
 void set_menu();
 void game_fsm();
 

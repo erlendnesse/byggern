@@ -62,63 +62,41 @@ void motor_enable(uint8_t bool) {
 int motor_read_encoder() {
 	PIOD->PIO_CODR = PIO_PD0; // STOP recording encoder values
 	PIOD->PIO_CODR = PIO_PD2; // SELECT HIGH BYTE
-	delay_ms(0.02);
-	//PIOD->PIO_CODR = PIO_PD1; //reset encoder value
-	//*data = (PIOC->PIO_PDSR & 0b11111111) << 8;
-	uint8_t msb = (PIOC->PIO_PDSR & (0xFF << 1)) >> 1;
-	//printf("ENCODER VALUE HIGH: %d \r", (int)PIOC->PIO_PDSR);
+	delay_us(0.02);
+	uint8_t high_byte = PIOC->PIO_PDSR >> 1;
 	PIOD->PIO_SODR = PIO_PD2; // SELECT LOW BYTE
-	delay_ms(0.02);
-	uint8_t lsb = (PIOC->PIO_PDSR & (0xFF << 1)) >> 1;
-	//*data = *data + (PIOC->PIO_PDSR & 0b11111111);
-	//printf(("ENCODER VALUE LOW: %d \r",PIOC->PIO_PDSR & 0b11111111)); 
-	PIOD->PIO_CODR = PIO_PD1; //reset encoder value
+	delay_us(0.02);
+	uint8_t low_byte = PIOC->PIO_PDSR >> 1;
+	PIOD->PIO_CODR = PIO_PD1;
 	PIOD->PIO_SODR = PIO_PD1; 
 	
 	PIOD->PIO_SODR = PIO_PD0;
-    uint16_t encoder_data = ((msb << 8) | lsb);
-    if (encoder_data & (1 << 15)) {
-	     //printf("ENCODER VALUE: %u\r",((uint16_t) (~encoder_data) + 1));
-		 return ((uint16_t) (~encoder_data) + 1);
+    uint16_t data = (high_byte << 8) | low_byte;
+    if (data & (1 << 15)) { //splitter opp encoder fra -2^16/2 <-> 2^16/2 for å ha 0 som midtpunkt
+		 return ((uint16_t)(~data) + 1); //når enkoder data er under 2^15
     }
 	else {
-	//printf("ENCODER VALUE: %d\r", (-encoder_data));
+		return -data; //når enkoder data er over 2^15
 	}
-	return -encoder_data;
-    
 }
 
-	
-	float scale_slider_output(float value) {
-		if (value < 9) {
+float scale_slider_output(float value) {
+	if (value < 9) {
 			value = 0;
-		}
-		float scaled_val = value * 1404/255;
-		return scaled_val;
 	}
-	
-	
-	
-	
-	//eencoder - 0-1404
-	//joystick - 0-256 midtpunkt 160
+	float scaled_val = value * 1404/255; //interval scaling
+	return scaled_val;
+}
 
-void motor_run(uint8_t dir) {
-	
-	
+void motor_run(uint8_t dir) {	
 	uint8_t direction = 0;
 	uint8_t enable = 0;
-	
 	
 	int encoder_output = motor_read_encoder();
 	int slider_pos =  (int)scale_slider_output(dir);
 	
-
-	
 	float control_input = pid_regulator(slider_pos, encoder_output);
-	
-	
-	
+
 	if(control_input > 10) {
 		enable = 1;
 		direction = 1;
@@ -144,8 +122,6 @@ void motor_run(uint8_t dir) {
 	else {
 		enable = 0;
 	}
-	
-	
 	motor_enable(enable);
 }
 

@@ -20,7 +20,7 @@ void solenoid_shoot(int button){
     //generates short pulse if button is pressed
     if (button) {
         PIOA->PIO_CODR |= PIO_PA14;
-        delay_ms(100);
+        delay_us(100);
         PIOA->PIO_SODR |= PIO_PA14;
     }
 }

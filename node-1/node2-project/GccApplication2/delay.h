@@ -13,7 +13,7 @@
 
 void SysTick_Handler(void);
 
-void delay_ms(float ms);
+void delay_us(float ms);
 
 
 #endif /* DELAY_H_ */

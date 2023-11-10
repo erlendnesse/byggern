@@ -47,7 +47,5 @@ void pwm_set_duty_cycle(uint32_t joystick_pos) {
 	else {
 		PWM->PWM_CH_NUM[5].PWM_CDTY = duty_cycle;
 	}
-	
-	//printf("duty cycle calc: %d\r", duty_cycle);
 }
 

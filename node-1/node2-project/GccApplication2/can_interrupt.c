@@ -43,7 +43,6 @@ void CAN0_Handler( void )
 			can_receive(&message, 1);
 			if(message.id == 1) { //id of joystick msg
 				pwm_set_duty_cycle(message.data[0]);
-				//motor_run(message.data[0]);
 			}
 		}
 		else if(can_sr & CAN_SR_MB2) //Mailbox 2 event
@@ -52,7 +51,6 @@ void CAN0_Handler( void )
 			can_receive(&message, 2);
 			if(message.id == 1) { //id of joystick msg
 				pwm_set_duty_cycle(message.data[0]);
-				//motor_run(message.data[0]);
 			}
 		}
 		else

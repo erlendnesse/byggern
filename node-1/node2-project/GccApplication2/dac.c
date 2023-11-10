@@ -10,13 +10,13 @@
 
 int dac_init() {
 	//free running mode, enable channel an write data in DACC conversion data register
-	DACC->DACC_MR |= DACC_MR_USER_SEL_CHANNEL1 | DACC_MR_STARTUP_16; //Set startup time if not working?
+	DACC->DACC_MR |= DACC_MR_USER_SEL_CHANNEL1 | DACC_MR_STARTUP_16; 
 	
 	//enable channel 1 
 	DACC->DACC_CHER |= DACC_CHER_CH1;
 	
 	//enable clock for DAC
-	PMC->PMC_PCR |= (1<<28) | (38);
+	PMC->PMC_PCR |= (1<<28) | 38;
 	
 	// enable power adc 
 	PMC->PMC_PCER1 |= PMC_PCER1_PID38;

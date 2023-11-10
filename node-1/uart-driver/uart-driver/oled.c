@@ -64,10 +64,6 @@ void oled_goto_column(int column) {
 		write_command(0x00 + (column&0x0F));
 		write_command(0x10 + ((column&0xF0) >> 4));
 	}
-	
-	 // Alternativ funksjon
-	 //write_command(0x00 + (column % 16)); // Lower nibble
-	 //write_command(0x10 + (column / 16)); // Higher nibble
 }
 
 void oled_goto_page(int page) {

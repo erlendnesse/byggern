@@ -8,15 +8,14 @@
 #include "sam.h"
 
 
-volatile float milliseconds = 0;
+volatile float sys_ticks = 0;
 
 void SysTick_Handler(void) {
-	milliseconds++;
+	sys_ticks++;
 }
 
-void delay_ms(float ms) {
-	float start_time = milliseconds;
-	while ((milliseconds - start_time) < ms) {
-		// You can add other tasks or code here; it won't block the delay
+void delay_us(float us) { //tilsvares ish 1 mikrosekund, men ikke helt nøyaktig
+	float start_time = sys_ticks;
+	while ((sys_ticks - start_time) < us) {
 	}
 }

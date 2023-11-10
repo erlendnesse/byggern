@@ -22,6 +22,8 @@
 
 //TC0 TIOA0 PB25 B
 
+//timer counter is not used
+
 
 void timer_counter_init() {
 	//REG_TC0_CCR0
@@ -33,7 +35,7 @@ void timer_counter_init() {
 	//*k |= 1;
 	//*REG_TC0_CMR0 |= 1 << 14 | 1 << 15 | 3 << 16; 
 	//*REG_TC0_IER0 |= 1 << 2;
-	//*REG_TC0_RC0 = 0xaf;
+	*REG_TC0_RC0 = 0xaf;
 	
 	//Kan bruke TC_SR til feilsjekk(status register)
 	
